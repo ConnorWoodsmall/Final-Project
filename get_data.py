@@ -19,12 +19,12 @@ app.config['SWAGGER'] = {
 }
 swagger = Swagger(app)
 
-# Configure the databse URL
+# Configure the database URL
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 db = SQLAlchemy(app)
 
-# Define a datbase model
+# Define a database model
 
 class Agency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -174,43 +174,6 @@ def load_database():
     }
 
     return jsonify({"message": "Database loaded successfully"}, summary)
-
-
-# I want the user to input an Agency name and get the subcommittes that match. Use docstrings to define the OpenAPI specs for Swagger UI
-# @app.route('/get_subcommittees', methods=['GET'])
-# def get_subcommittees():
-#     """
-#     Get subcommittees by agency name.
-#     ---
-#     parameters:
-#         - name: agency_name
-#           in: query
-#           type: string
-#           required: true
-#           description: The name of the agency to search for.
-#     responses:
-#         200:
-#             description: A list of subcommittees for the specified agency.
-#             schema:
-#                 type: array
-#                 items:
-#                     type: object
-#                     properties:
-#                         id:
-#                             type: integer
-#                             description: The ID of the subcommittee.
-#                         name:
-#                             type: string
-#                             description: The name of the subcommittee.'
-#     """
-#     agency_name = request.args.get('agency_name')
-#     if not agency_name:
-#         return jsonify({"error": "Agency name is required"}), 400
-
-#     subcommittees = SubCommittee.query.join(Agency).filter(Agency.name == agency_name).all()
-#     result = [{"id": subcommittee.id, "name": subcommittee.name} for subcommittee in subcommittees]
-    
-#     return jsonify(result)
 
 @app.route('/get_subcommittees', methods=['GET'])
 def get_subcommittees():
